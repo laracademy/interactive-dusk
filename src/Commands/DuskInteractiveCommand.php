@@ -13,8 +13,6 @@ class DuskInteractiveCommand extends Command
      */
     protected $signature = 'dusk:interactive';
 
-    protected $options;
-
     /**
      * The console command description.
      *
@@ -22,7 +20,12 @@ class DuskInteractiveCommand extends Command
      */
     protected $description = 'Interactive Dusk Tests';
 
-    protected $testDirectory;
+    /**
+     * The directory of where the tests are kept.
+     *
+     * @var string
+     */
+    protected $directory = '/tests/Browser/';
 
     /**
      * Create a new command instance.
@@ -32,8 +35,6 @@ class DuskInteractiveCommand extends Command
     public function __construct()
     {
         parent::__construct();
-
-        $this->testDirectory = 'tests/Browser';
     }
 
     /**
@@ -43,44 +44,65 @@ class DuskInteractiveCommand extends Command
      */
     public function handle()
     {
-        $this->info('********* Interactive Dusk Tests *********');
+        $this->info('********* Interactive Laravel Dusk Tests *********');
 
         // find all tests
         $files = [
-            0 => 'All Tests'
+            0 => 'Exit',
+            1 => 'Run Laravel Dusk Normally',
         ];
 
-        foreach(glob(base_path() .'/'. $this->testDirectory .'/*.php') as $filename) {
-            $files[] = str_replace(base_path() .'/'. $this->testDirectory .'/', '', $filename);
+        foreach(glob(base_path() . $this->directory .'*.php') as $filename) {
+            // replace full path
+            $f = str_replace(base_path() . $this->directory, '', $filename);
+
+            // replace .php
+            $f = str_replace('.php', '', $f);
+
+            // store file name
+            $files[] = $f;
         }
 
         // choice returns the value from the array
-        $choice = $this->choice('Which test would you like to run?', $files);
+        $choice = $this->choice('Please select a test from the list below that you would like to run', $files);
 
         // transform it into the key
         $key = array_search($choice, $files);
 
-        if($key == 0) {
-            // all the tests
-            $this->info('Running all Dusk tests');
+        // what kind of dusk test are we running
+        switch($key) {
+            case 0:
+                // exit program
+                $this->info('Exiting program');
+                break;
+            case 1:
+                // all tests
+                $this->info('Starting Laravel Dusk normally');
 
-            exec('php artisan dusk', $output);
+                // execute dusk
+                exec('php artisan dusk', $output);
 
-            foreach($output as $line) {
-                $this->info($line);
-            }
+                // output result
+                $this->output($output);
+                break;
+            default:
+                // single test
+                $this->info('Starting Laravel Dusk with the following test '. $files[$key]);
 
-        } else {
-            // single test
-            $this->info('Running test for '. $files[$key]);
+                // execute dusk with the specific test
+                exec('php artisan dusk '. $this->directory . $files[$key] .'.php', $output);
 
-            exec('php artisan dusk '. $this->testDirectory .'/'. $files[$key], $output);
-
-            foreach($output as $line) {
-                $this->info($line);
-            }
+                // output result
+                $this->output($output);
+                break;
         }
+    }
 
+    public function output($output)
+    {
+        foreach($output as $line) {
+            $this->info($line);
+        }
     }
 
 }
