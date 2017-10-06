@@ -1,4 +1,4 @@
-# Interactive Make for Laravel 5.4
+# Interactive Dusk for Laravel 5.4
 
 [![Latest Stable Version](https://poser.pugx.org/laracademy/dusk-interactive/v/stable)](https://packagist.org/packages/laracademy/dusk-interactive)  [![Total Downloads](https://poser.pugx.org/laracademy/dusk-interactive/downloads)](https://packagist.org/packages/laracademy/dusk-interactive) [![Latest Unstable Version](https://poser.pugx.org/laracademy/dusk-interactive/v/unstable)](https://packagist.org/packages/laracademy/dusk-interactive) [![License](https://poser.pugx.org/laracademy/dusk-interactive/license)](https://packagist.org/packages/laracademy/dusk-interactive)
 
