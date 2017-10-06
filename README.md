@@ -33,8 +33,11 @@ php artisan dusk:interactive
 
 ### Preview
 
-`Coming Soon`
+##### Running a single dusk test
+![Single Dusk Test](https://i.imgur.com/F2k6Q2b.gif)
 
+##### Running all dusk tests
+![Single Dusk Test](https://i.imgur.com/RdeziHx.gif)
 
 
 ## Disclaimer
