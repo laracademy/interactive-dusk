@@ -1,0 +1,24 @@
+{
+    "name": "laracademy/dusk-interactive",
+    "description": "Interactive package for Dusk tests",
+    "authors": [
+        {
+            "name": "Michael McMullen",
+            "email": "packages@laracademy.co"
+        }
+    ],
+    "require": {},
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+          "Laracademy\\Commands\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Laracademy\\Commands\\DuskInteractiveServiceProvider"
+            ]
+        }
+    }
+}
