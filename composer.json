@@ -1,6 +1,7 @@
 {
     "name": "laracademy/dusk-interactive",
     "description": "Interactive package for Dusk tests",
+    "license": "MIT",
     "authors": [
         {
             "name": "Michael McMullen",
