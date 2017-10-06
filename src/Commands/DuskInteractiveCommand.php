@@ -90,7 +90,7 @@ class DuskInteractiveCommand extends Command
                 $this->info('Starting Laravel Dusk with the following test '. $files[$key]);
 
                 // execute dusk with the specific test
-                exec('php artisan dusk '. $this->directory . $files[$key] .'.php', $output);
+                exec('php artisan dusk '. substr($this->directory, 1) . $files[$key] .'.php', $output);
 
                 // output result
                 $this->output($output);
