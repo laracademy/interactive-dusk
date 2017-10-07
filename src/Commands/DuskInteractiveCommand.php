@@ -11,7 +11,31 @@ class DuskInteractiveCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'dusk:interactive';
+    protected $signature = 'dusk:interactive
+                            {--stop-on-error       : Stop execution upon first error}
+                            {--stop-on-failure     : Stop execution upon first error or failure}
+                            {--stop-on-warning     : Stop execution upon first warning}
+                            {--stop-on-risky       : Stop execution upon first risky test}
+                            {--stop-on-skipped     : Stop execution upon first skipped test}
+                            {--stop-on-incomplete  : Stop execution upon first incomplete test}
+                            {--fail-on-warning     : Treat tests with warnings as failures}
+                            {--fail-on-risky       : Treat risky tests as failures}';
+
+    /**
+     * Native PHPUnit options that can be passed when running tests.
+     *
+     * @var array
+     */
+    protected $phpUnitOptions = [
+        'stop-on-error',
+        'stop-on-failure',
+        'stop-on-warning',
+        'stop-on-risky',
+        'stop-on-skipped',
+        'stop-on-incomplete',
+        'fail-on-warning',
+        'fail-on-risky',
+    ];
 
     /**
      * The console command description.
@@ -80,7 +104,7 @@ class DuskInteractiveCommand extends Command
                 $this->info('Starting Laravel Dusk normally');
 
                 // execute dusk
-                exec('php artisan dusk', $output);
+                exec("php artisan dusk {$this->setPhpUnitOptions()}", $output);
 
                 // output result
                 $this->output($output);
@@ -90,12 +114,31 @@ class DuskInteractiveCommand extends Command
                 $this->info('Starting Laravel Dusk with the following test ' . $files[$key]);
 
                 // execute dusk with the specific test
-                exec('php artisan dusk '. substr($this->directory, 1) . $files[$key] .'.php', $output);
+                $testName = substr($this->directory, 1) . $files[$key] . '.php';
+                exec("php artisan dusk {$testName} {$this->setPhpUnitOptions()}", $output);
 
                 // output result
                 $this->output($output);
                 break;
         }
+    }
+
+    /**
+     * Set the options to run the Dusk tests with.
+     *
+     * @return string
+     */
+    public function setPhpUnitOptions()
+    {
+        $options = '';
+
+        foreach ($this->phpUnitOptions as $phpUnitOption) {
+            if ($this->option($phpUnitOption)) {
+                $options .= "--{$phpUnitOption} ";
+            }
+        }
+
+        return $options;
     }
 
     /**
