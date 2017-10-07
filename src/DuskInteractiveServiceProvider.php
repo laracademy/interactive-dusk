@@ -1,4 +1,5 @@
 <?php
+
 namespace Laracademy\Commands;
 
 use Illuminate\Support\ServiceProvider;

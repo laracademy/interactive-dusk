@@ -52,7 +52,7 @@ class DuskInteractiveCommand extends Command
             1 => 'Run Laravel Dusk Normally',
         ];
 
-        foreach(glob(base_path() . $this->directory .'*.php') as $filename) {
+        foreach (glob(base_path() . $this->directory . '*.php') as $filename) {
             // replace full path
             $f = str_replace(base_path() . $this->directory, '', $filename);
 
@@ -70,7 +70,7 @@ class DuskInteractiveCommand extends Command
         $key = array_search($choice, $files);
 
         // what kind of dusk test are we running
-        switch($key) {
+        switch ($key) {
             case 0:
                 // exit program
                 $this->info('Exiting program');
@@ -87,7 +87,7 @@ class DuskInteractiveCommand extends Command
                 break;
             default:
                 // single test
-                $this->info('Starting Laravel Dusk with the following test '. $files[$key]);
+                $this->info('Starting Laravel Dusk with the following test ' . $files[$key]);
 
                 // execute dusk with the specific test
                 exec('php artisan dusk '. substr($this->directory, 1) . $files[$key] .'.php', $output);
@@ -98,11 +98,15 @@ class DuskInteractiveCommand extends Command
         }
     }
 
+    /**
+     * Output the result.
+     *
+     * @param array $output
+     */
     public function output($output)
     {
-        foreach($output as $line) {
+        foreach ($output as $line) {
             $this->info($line);
         }
     }
-
 }
