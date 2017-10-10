@@ -70,11 +70,11 @@ class DuskInteractiveCommand extends Command
     {
         $this->info('********* Interactive Laravel Dusk Tests *********');
 
-        // find all tests
-        $files = [
+        $optionList = [
             0 => 'Exit',
             1 => 'Run Laravel Dusk Normally',
         ];
+        $fileList = $optionList;
 
         foreach (glob(base_path() . $this->directory . '*.php') as $filename) {
             // replace full path
@@ -83,15 +83,17 @@ class DuskInteractiveCommand extends Command
             // replace .php
             $f = str_replace('.php', '', $f);
 
-            // store file name
-            $files[] = $f;
+            // store filename
+            $optionList[] = $f;
+            // store readable name
+            $fileList[] = $this->readableFileName($f);
         }
 
         // choice returns the value from the array
-        $choice = $this->choice('Please select a test from the list below that you would like to run', $files);
+        $choice = $this->choice('Please select a test from the list below that you would like to run', $fileList);
 
         // transform it into the key
-        $key = array_search($choice, $files);
+        $key = array_search($choice, $fileList);
 
         // what kind of dusk test are we running
         switch ($key) {
@@ -111,10 +113,10 @@ class DuskInteractiveCommand extends Command
                 break;
             default:
                 // single test
-                $this->info('Starting Laravel Dusk with the following test ' . $files[$key]);
+                $this->info('Starting Laravel Dusk with the following test: ' . $fileList[$key]);
 
                 // execute dusk with the specific test
-                $testName = substr($this->directory, 1) . $files[$key] . '.php';
+                $testName = substr($this->directory, 1) . $optionList[$key] . '.php';
                 exec("php artisan dusk {$testName} {$this->setPhpUnitOptions()}", $output);
 
                 // output result
@@ -151,5 +153,10 @@ class DuskInteractiveCommand extends Command
         foreach ($output as $line) {
             $this->info($line);
         }
+    }
+
+    public function readableFileName($filename)
+    {
+        return trim(implode(' ', preg_split("/((?<=[a-z])(?=[A-Z])|(?=[A-Z][a-z]))/", $filename)));
     }
 }
