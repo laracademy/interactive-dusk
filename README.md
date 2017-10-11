@@ -34,12 +34,13 @@ php artisan dusk:interactive
 ### Preview
 
 ##### Running a single dusk test
-![Single Dusk Test](https://i.imgur.com/F2k6Q2b.gif)
+![Single Dusk Test](https://imgur.com/JYDj6QQ.gif)
 
 ##### Running all dusk tests
-![Single Dusk Test](https://i.imgur.com/RdeziHx.gif)
+![Single Dusk Test](https://imgur.com/TBgVrtn.gif)
 
 
 ## Disclaimer
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+RE.
